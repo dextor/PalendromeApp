@@ -1,23 +1,69 @@
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
 
 function App() {
+
+  let input;
+  const [palendromeResultMessage, setPalendromeResultMessage] = useState(false);
+
+
+  function reverseWord(text) {
+    let reversed = [];
+    for (let i = text.length-1; i >= 0; i--) {
+      reversed.push(text[i]);
+    }
+    return reversed.join('');
+  }
+
+  function checkIfMatches(input, reversed) {
+    if(input === reversed) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  function showResult(isMatch) {
+    if(isMatch) {
+      setPalendromeResultMessage('It\'s a Palendrome! :)');
+    }
+    else {
+      setPalendromeResultMessage('Not a Palendrome :(');
+    }
+  }
+
+
+
+  function handleInputChange(e) {
+    input = e.target.value;
+    setPalendromeResultMessage('');
+  }
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const reversed = reverseWord(input);
+    const isPalendrome = checkIfMatches(input, reversed);
+    showResult(isPalendrome);
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='palendrome-main'>
+        
+        <div className='inputs-container'>
+          <input type="text" onChange={ (e) => handleInputChange(e) } />
+          <button onClick={(e) => handleSubmit(e) }>Submit</button>
+        </div>
+        
+        <div className='result-message'>
+          { palendromeResultMessage }
+        </div>
+
+      </div>
     </div>
   );
 }
