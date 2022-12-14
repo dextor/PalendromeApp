@@ -7,15 +7,29 @@
 }
 .palendrome-main {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 35px;
 }
 
 .inputs-container {
   display: grid;
   grid-template-columns: 200px 100px;
   grid-column-gap: 10px;
+  grid-row-gap: 10px;
 }
 
 .result-message {
+  font-style: italic;
+  padding-top: 20px;
+}
 
+.result-message.success {
+  color: green;
+}
+.result-message.fail {
+  color: red;
 }

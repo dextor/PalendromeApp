@@ -5,6 +5,7 @@ function App() {
 
   let input;
   const [palendromeResultMessage, setPalendromeResultMessage] = useState(false);
+  const [resultStatus, setResultStatus] = useState('fail');
 
 
   function reverseWord(text) {
@@ -26,13 +27,15 @@ function App() {
 
   function showResult(isMatch) {
     if(isMatch) {
-      setPalendromeResultMessage('It\'s a Palendrome! :)');
+      setPalendromeResultMessage('(: (: (: It\'s a Palendrome! :) :) :)');
+      setResultStatus('success');
     }
     else {
-      setPalendromeResultMessage('Not a Palendrome :(');
+      setPalendromeResultMessage('): ): ): Not a Palendrome :( :( :(');
+      setResultStatus('fail');
     }
   }
-
+  
 
 
   function handleInputChange(e) {
@@ -43,9 +46,11 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const reversed = reverseWord(input);
-    const isPalendrome = checkIfMatches(input, reversed);
-    showResult(isPalendrome);
+    if(input){
+      const reversed = reverseWord(input);
+      const isPalendrome = checkIfMatches(input, reversed);
+      showResult(isPalendrome);
+    }
   }
 
 
@@ -53,13 +58,13 @@ function App() {
   return (
     <div className="App">
       <div className='palendrome-main'>
-        
+        <h1>Test Your Palendrome Writing Skills</h1>
         <div className='inputs-container'>
           <input type="text" onChange={ (e) => handleInputChange(e) } />
           <button onClick={(e) => handleSubmit(e) }>Submit</button>
         </div>
         
-        <div className='result-message'>
+        <div className={`result-message ${resultStatus}`}>
           { palendromeResultMessage }
         </div>
 
