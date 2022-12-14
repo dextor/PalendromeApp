@@ -1,11 +1,12 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
-
-  let input;
+  
+  const [inputText, setInputText] = useState('');
   const [palendromeResultMessage, setPalendromeResultMessage] = useState(false);
   const [resultStatus, setResultStatus] = useState('fail');
+
 
 
   function reverseWord(text) {
@@ -16,40 +17,46 @@ function App() {
     return reversed.join('');
   }
 
+
+
   function checkIfMatches(input, reversed) {
-    if(input === reversed) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    if(input === reversed) { return true; }
+    return false;
   }
+
+
 
   function showResult(isMatch) {
     if(isMatch) {
-      setPalendromeResultMessage('(: (: (: It\'s a Palendrome! :) :) :)');
+      setPalendromeResultMessage(`is a Palendrome! :) :) :)`);
       setResultStatus('success');
     }
     else {
-      setPalendromeResultMessage('): ): ): Not a Palendrome :( :( :(');
+      setPalendromeResultMessage(`is not a Palendrome :( :( :(`);
       setResultStatus('fail');
     }
   }
-  
+
 
 
   function handleInputChange(e) {
-    input = e.target.value;
+    setInputText(e.target.value);
     setPalendromeResultMessage('');
+    setResultStatus('');
   }
+
 
 
   function handleSubmit(e) {
     e.preventDefault();
-    if(input){
-      const reversed = reverseWord(input);
-      const isPalendrome = checkIfMatches(input, reversed);
+    if(inputText){
+      const reversed = reverseWord(inputText);
+      const isPalendrome = checkIfMatches(inputText, reversed);
       showResult(isPalendrome);
+    }
+    else {
+      setPalendromeResultMessage('Input some text first!');
+      setResultStatus('fail');
     }
   }
 
@@ -60,12 +67,16 @@ function App() {
       <div className='palendrome-main'>
         <h1>Test Your Palendrome Writing Skills</h1>
         <div className='inputs-container'>
-          <input type="text" onChange={ (e) => handleInputChange(e) } />
+          <input 
+            type="text" 
+            value={inputText}
+            onChange={ (e) => handleInputChange(e) } 
+          />
           <button onClick={(e) => handleSubmit(e) }>Submit</button>
         </div>
         
         <div className={`result-message ${resultStatus}`}>
-          { palendromeResultMessage }
+          <span className='input-text'>{ inputText }</span> { palendromeResultMessage }
         </div>
 
       </div>
